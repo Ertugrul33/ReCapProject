@@ -5,8 +5,8 @@
 	ModelYear nvarchar(25),
 	DailyPrice decimal,
 	Descriptions nvarchar(25),
-	FOREIGN KEY (BrandID) REFERENCES Brands(BrandID),
-	FOREIGN KEY (ColorID) REFERENCES Colors(ColorID)
+	FOREIGN KEY (BrandId) REFERENCES Colors(ColorId),
+	FOREIGN KEY (ColorId) REFERENCES Brands(BrandId)
 )
 
 CREATE TABLE Colors(
