@@ -1,6 +1,7 @@
 ﻿using Business.Abstract;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,11 +17,11 @@ namespace Business.Concrete
             _carDal = carDal;
         }
 
-        public void Add(Brand brand, Car car)
+        public void Add(Car car)
         {
-            if (brand.BrandName.Length > 2 && car.DailyPrice > 0)
+            if (car.CarName.Length > 2 && car.DailyPrice > 0)
             {
-                Console.WriteLine("Marka başarıyla eklendi: " + brand.BrandName);
+                Console.WriteLine("Araba başarıyla eklendi: " + car.CarName);
                 Console.WriteLine("Günlük Fiyatı: " + car.DailyPrice);
 
             }
@@ -39,12 +40,31 @@ namespace Business.Concrete
 
         public List<Car> GetCarsByBrandId(int id)
         {
-            return _carDal.GetAll(p => p.BrandId == id);
+            return _carDal.GetAll(ca => ca.BrandId == id);
         }
 
         public List<Car> GetCarsByColorId(int id)
         {
-            return _carDal.GetAll(p => p.ColorId == id);
+            return _carDal.GetAll(ca => ca.ColorId == id);
+        }
+        public List<CarDetailDto> GetCarDetails()
+        {
+            return _carDal.GetCarDetails();
+        }
+
+        public void Update(Car car)
+        {
+            Console.WriteLine("Araba başarıyla güncellendi: " + car.CarName);
+        }
+
+        public void Delete(Car car)
+        {
+            Console.WriteLine("Marka başarıyla silindi: " + car.CarName);
+        }
+
+        public Car GetById(int carId)
+        {
+            return _carDal.Get(ca => ca.CarId == carId);
         }
     }
 }
