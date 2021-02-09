@@ -22,6 +22,7 @@ namespace ConsoleUI
                 Console.WriteLine(car.CarName);
             }
             Console.WriteLine("-----------------");
+            Console.WriteLine("(Araba Adı --- Marka Adı)");
             foreach (var car in carManager.GetCarDetails())
             {
                 Console.WriteLine("{0} --- {1}", car.CarName, car.BrandName);
