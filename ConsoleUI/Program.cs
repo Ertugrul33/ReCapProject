@@ -10,23 +10,32 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            CarTest();
-            BrandTest();
+            //CarTest();
+            //BrandTest();
+            RentalTest();
+        }
+
+        private static void RentalTest()
+        {
+            RentalManager rentalManager = new RentalManager(new EfRentalDal());
+            rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = DateTime.Now});
+            rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = DateTime.Now});
+            rentalManager.Add(new Rental { CustomerId = 2, CarId = 1, RentDate = DateTime.Now});
+
+            foreach (var rental in rentalManager.GetRentalDetailsDto(1).Data)
+            {
+                Console.WriteLine("Araba adı = " + rental.CarName + ",   Müşteri adı = " + rental.CustomerName +
+                    ",  Arabayı kiraladığı gün = " + rental.RentDate + ",  Kullanıcı adı = " + rental.UserName);
+            }
         }
 
         private static void CarTest()
         {
             CarManager carManager = new CarManager(new EfCarDal());
-            foreach (var car in carManager.GetAll())
-            {
-                Console.WriteLine(car.CarName);
-            }
+            carManager.GetAll();
             Console.WriteLine("-----------------");
             Console.WriteLine("(Araba Adı --- Marka Adı)");
-            foreach (var car in carManager.GetCarDetails())
-            {
-                Console.WriteLine("{0} --- {1}", car.CarName, car.BrandName);
-            }
+            carManager.GetCarDetails();
             Console.WriteLine("-----------------");
             carManager.Add(new Car { CarName = "Porsche Carrera GT", DailyPrice = 1000000 });
             Console.WriteLine("-----------------");
@@ -42,10 +51,7 @@ namespace ConsoleUI
         private static void BrandTest()
         {
             BrandManager brandManager = new BrandManager(new EfBrandDal());
-            foreach (var car in brandManager.GetAll())
-            {
-                Console.WriteLine(car.BrandName);
-            }
+            brandManager.GetAll();
             Console.WriteLine("-----------------");
             brandManager.Add(new Brand { BrandName = "Porsche"});
             Console.WriteLine("-----------------");
