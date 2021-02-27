@@ -45,6 +45,21 @@ CREATE TABLE Rentals(
 	FOREIGN KEY (CustomerId) REFERENCES Customers(Id)
 )
 
+CREATE TABLE CarImages (
+    Id int,
+    CarId int,
+    ImagePath varchar(255),
+    Date DateTime
+);
+
+ALTER TABLE CarImages
+ALTER COLUMN Id int NOT NULL;
+
+ALTER TABLE CarImages
+ADD PRIMARY KEY (Id);
+ALTER TABLE CarImages
+ADD FOREIGN KEY (CarId) REFERENCES Cars(Id);
+
 INSERT INTO Brands(BrandName)
 VALUES
 	('Mercedes'),

@@ -13,6 +13,18 @@ namespace ConsoleUI
             //CarTest();
             //BrandTest();
             RentalTest();
+
+            CarImage carImage = new CarImage
+            {
+                Id = 1,
+                CarId = 1,
+                ImagePath = @"c:\sources\images\birinci.ikinci.ucuncu.jpg",
+                Date = DateTime.Now
+            };
+            string[] fileSplit = carImage.ImagePath.Split('.');
+            var extensionOfFile = "." + fileSplit[fileSplit.Length - 1];
+            var newPathName = Guid.NewGuid().ToString() + extensionOfFile;
+            Console.WriteLine(newPathName);
         }
 
         private static void RentalTest()
@@ -22,7 +34,7 @@ namespace ConsoleUI
             rentalManager.Add(new Rental { CustomerId = 1, CarId = 1, RentDate = DateTime.Now});
             rentalManager.Add(new Rental { CustomerId = 2, CarId = 1, RentDate = DateTime.Now});
 
-            foreach (var rental in rentalManager.GetRentalDetailsDto(1).Data)
+            foreach (var rental in rentalManager.GetRentalDetails(1).Data)
             {
                 Console.WriteLine("Araba adı = " + rental.CarName + ",   Müşteri adı = " + rental.CustomerName +
                     ",  Arabayı kiraladığı gün = " + rental.RentDate + ",  Kullanıcı adı = " + rental.UserName);

@@ -67,8 +67,26 @@ namespace Business.Concrete
 
         public IResult Update(Rental rental)
         {
-            _rentalDal.Update(rental);
-            return new SuccessResult(Messages.RentalUpdated);
+            if (IsExist(rental.Id).Success)
+            {
+                var rentalToUpdate = GetById(rental.Id);
+                if (rental.CarId.Equals(null) || rental.CarId.Equals(0))
+                {
+                    rental.CarId = rentalToUpdate.Data.CarId;
+                }
+                if (rental.CustomerId.Equals(null) || rental.CustomerId.Equals(0))
+                {
+                    rental.CustomerId = rentalToUpdate.Data.CustomerId;
+                }
+                if (rental.RentDate.Equals(null) || rental.RentDate.Equals(DateTime.MinValue))
+                {
+                    rental.RentDate = rentalToUpdate.Data.RentDate;
+                }
+                rental.ReturnDate = DateTime.MinValue;
+                _rentalDal.Update(rental);
+                return new SuccessResult(Messages.RentalUpdated);
+            }
+            return new ErrorResult(Messages.RentalNotFound);
         }
 
         public IResult UpdateReturnDate(int Id)
@@ -82,6 +100,16 @@ namespace Business.Concrete
             updatedRental.ReturnDate = DateTime.Now;
             _rentalDal.Update(updatedRental);
             return new SuccessResult();
+        }
+
+        private IResult IsExist(int rentalId)
+        {
+            var rentalExist = GetById(rentalId);
+            if (rentalExist.Data != null)
+            {
+                return new SuccessResult(Messages.RentalExists);
+            }
+            return new ErrorResult(Messages.RentalNotFound);
         }
     }
 }

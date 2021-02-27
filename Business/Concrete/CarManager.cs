@@ -71,5 +71,15 @@ namespace Business.Concrete
         {
             return new SuccessDataResult<Car>(_carDal.Get(ca => ca.CarId == carId));
         }
+
+        public IResult IsExist(int carId)
+        {
+            var carExist = GetById(carId);
+            if (carExist.Data != null)
+            {
+                return new SuccessResult(Messages.CarExists);
+            }
+            return new ErrorResult(Messages.CarNotFound);
+        }
     }
 }

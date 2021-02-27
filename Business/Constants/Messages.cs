@@ -6,12 +6,14 @@ namespace Business.Constants
 {
     public static class Messages
     {
+        public static string MaintenanceTime = "Sistem bakımda";
         public static string CarAdded = "Araba eklendi";
-        public static string CarUpdated = "Araba eklendi";
+        public static string CarUpdated = "Araba güncellendi";
         public static string CarDeleted = "Araba silindi";
         public static string CarNameInvalid = "Araba ismi geçersiz";
-        public static string MaintenanceTime = "Sistem bakımda";
+        public static string CarNotFound = "Araç bulunamadı";
         public static string CarsListed = "Arabalar listelendi";
+        public static string CarExists = "Araç zaten veritabanında var.";
         public static string BrandAdded = "Marka eklendi";
         public static string BrandUpdated = "Marka güncellendi";
         public static string BrandDeleted = "Marka silindi";
@@ -32,5 +34,14 @@ namespace Business.Constants
         public static string RentalAddedError = "Aracın kiraya verilebilmesi için önce teslim edilmesi gerekir.";
         public static string RentalUpdated = "Kiralama işlemi güncellendi";
         public static string RentalDeleted = "Kiralama işlemi silindi";
+        public static string RentalNotFound = "Kiralama bulunamadı";
+        public static string CarImageAdded = "Araç resmi eklendi";
+        public static string CarImageUpdated = "Araç resmi güncellendi";
+        public static string CarImageDeleted = "Araç resmi silindi";
+        public static string CarImageNotFound = "Resim bulunamadı";
+        public static string CarImageExists = "Resim kaydı veritabanında var";
+        public static string MaxCarImageCountLimit = "Bir aracın en fazla 5 resmi olabilir";
+        public static string CarImageListed = "Resim(ler) listelendi";
+        public static string RentalExists = "Kiralama kaydı veritabanında var";
     }
 }
