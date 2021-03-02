@@ -21,11 +21,14 @@ CREATE TABLE Cars(
 )
 
 CREATE TABLE Users(
-	Id int PRIMARY KEY IDENTITY(1,1),
-	FirstName nvarchar(50),
-	LastName nvarchar(50),
-	Email nvarchar(50),
-	Password nvarchar(50)
+    Id           INT          IDENTITY (1, 1) NOT NULL,
+    FirstName    VARCHAR (50) NOT NULL,
+    LastName     VARCHAR (50) NOT NULL,
+    Email        VARCHAR (50) NOT NULL,
+    PasswordHash BINARY (500) NOT NULL,
+    PasswordSalt BINARY (500) NOT NULL,
+    Status       BIT          NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
 )
 
 CREATE TABLE Customers(
@@ -50,6 +53,19 @@ CREATE TABLE CarImages (
     CarId int,
     ImagePath varchar(255),
     Date DateTime
+);
+
+CREATE TABLE UserOperationClaims (
+    Id               INT IDENTITY (1, 1) NOT NULL,
+    UserId           INT NOT NULL,
+    OperationClaimId INT NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
+);
+
+CREATE TABLE OperationClaims (
+    Id   INT           IDENTITY (1, 1) NOT NULL,
+    Name VARCHAR (250) NOT NULL,
+    PRIMARY KEY CLUSTERED ([Id] ASC)
 );
 
 ALTER TABLE CarImages

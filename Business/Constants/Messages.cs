@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Core.Entities.Concrete;
+using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Text;
 
 namespace Business.Constants
@@ -26,6 +28,11 @@ namespace Business.Constants
         public static string UserUpdated = "Kullanıcı güncellendi";
         public static string UserDeleted = "Kullanıcı silindi";
         public static string UsersListed = "Kullanıcılar listelendi";
+        public static string UserRegistered = "Kayıt oldu";
+        public static string UserNotFound = "Kullanıcı bulunamadı";
+        public static string PasswordError = "Parola hatası";
+        public static string SuccessfulLogin = "Başarılı giriş";
+        public static string UserAlreadyExists = "Kullanıcı zaten mevcut";
         public static string CustomerAdded = "Müşteri eklendi";
         public static string CustomerUpdated = "Müşteri güncellendi";
         public static string CustomerDeleted = "Müşteri silindi";
@@ -43,5 +50,7 @@ namespace Business.Constants
         public static string MaxCarImageCountLimit = "Bir aracın en fazla 5 resmi olabilir";
         public static string CarImageListed = "Resim(ler) listelendi";
         public static string RentalExists = "Kiralama kaydı veritabanında var";
+        public static string AccessTokenCreated = "Token oluşturuldu";
+        public static string AuthorizationDenied = "Yetkiniz yok";
     }
 }
