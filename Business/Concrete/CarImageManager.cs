@@ -56,16 +56,23 @@ namespace Business.Concrete
 
         }
 
-        private static string RenameFileToGuid(FileOperation file)
+        [ValidationAspect(typeof(CarImageValidator))]
+        public IResult Update(FileOperation file, string path, CarImage carImage)
         {
-            string[] fileNameSplit = file.files.FileName.Split('.');
-            var extensionOfFile = "." + fileNameSplit[fileNameSplit.Length - 1];
-            var result =
-                DateTime.Now.Day.ToString() + "_" +
-                DateTime.Now.Month.ToString() + "_" +
-                DateTime.Now.Year.ToString() + "_" +
-                Guid.NewGuid().ToString() + extensionOfFile;
-            return result;
+            var result = BusinessRules.Run(IsExist(carImage.Id));
+            if (result != null)
+            {
+                return result;
+            }
+            var carImageToUpdate = _carImageDal.Get(p => p.Id == carImage.Id);
+            DeleteImage(path + carImageToUpdate.ImagePath);
+            string newImageFileName = RenameFileToGuid(file);
+            carImage.ImagePath = newImageFileName;
+            carImage.Date = DateTime.Now;
+            UploadImage(file, path, newImageFileName);
+
+            _carImageDal.Update(carImage);
+            return new SuccessResult(Messages.CarImageUpdated);
         }
 
         public IResult Delete(string path, CarImage carImage)
@@ -80,6 +87,18 @@ namespace Business.Concrete
             _carImageDal.Delete(carImage);
             return new SuccessResult(Messages.CarImageDeleted);
 
+        }
+
+        private static string RenameFileToGuid(FileOperation file)
+        {
+            string[] fileNameSplit = file.files.FileName.Split('.');
+            var extensionOfFile = "." + fileNameSplit[fileNameSplit.Length - 1];
+            var result =
+                DateTime.Now.Day.ToString() + "_" +
+                DateTime.Now.Month.ToString() + "_" +
+                DateTime.Now.Year.ToString() + "_" +
+                Guid.NewGuid().ToString() + extensionOfFile;
+            return result;
         }
 
         public IDataResult<List<CarImage>> GetAll()
@@ -110,24 +129,6 @@ namespace Business.Concrete
         public IDataResult<CarImage> GetById(int Id)
         {
             return new SuccessDataResult<CarImage>(_carImageDal.Get(p => p.Id == Id), Messages.CarImageListed);
-        }
-        [ValidationAspect(typeof(CarImageValidator))]
-        public IResult Update(FileOperation file, string path, CarImage carImage)
-        {
-            var result = BusinessRules.Run(IsExist(carImage.Id));
-            if (result != null)
-            {
-                return result;
-            }
-            var carImageToUpdate = _carImageDal.Get(p => p.Id == carImage.Id);
-            DeleteImage(path + carImageToUpdate.ImagePath);
-            string newImageFileName = RenameFileToGuid(file);
-            carImage.ImagePath = newImageFileName;
-            carImage.Date = DateTime.Now;
-            UploadImage(file, path, newImageFileName);
-
-            _carImageDal.Update(carImage);
-            return new SuccessResult(Messages.CarImageUpdated);
         }
 
         private IResult IsExist(int carImageId)
